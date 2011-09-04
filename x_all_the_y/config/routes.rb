@@ -1,4 +1,6 @@
 XAllTheY::Application.routes.draw do
+  match '*words', :controller => 'image', :action => 'show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
