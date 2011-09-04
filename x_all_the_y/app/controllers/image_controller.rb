@@ -7,4 +7,9 @@ class ImageController < ApplicationController
     # todo: strip out, handle '?' and '!'
     # todo: spaces via dots
   end
+
+  private 
+    def show_error_message
+      # todo
+    end
 end
