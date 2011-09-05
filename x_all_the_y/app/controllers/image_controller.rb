@@ -1,10 +1,8 @@
 class ImageController < ApplicationController
   def show
-    @verb = params[:words].split('/').first
-    @noun = params[:words].split('/').last
+    @verb = params[:words].split('/').first.gsub('.',' ')
+    @noun = params[:words].split('/').last.gsub('.',' ')
     render :text => "#{@verb} all the #{@noun}" 
-
-    # todo: spaces via dots
   end
 
   private 
