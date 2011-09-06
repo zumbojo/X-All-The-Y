@@ -9,13 +9,20 @@ class ImageController < ApplicationController
       "#{@verb} #{@words} #{@noun}" 
     
     # pictures!
+    #
+    # basic .annotate examples at 
+    # http://rmagick.rubyforge.org/portfolio.html
     if sad?
-      render :text => "sadness is not yet implemented :("
-      # todo: downcase
+      image = Magick::Image.read("#{RAILS_ROOT}/public/images/sad.png").first
+      overlay = Magick::Draw.new
+      overlay.annotate(image, 0, 0, 0, 10, @text.downcase << '?') {
+          self.gravity = Magick::NorthGravity
+          self.pointsize = 60
+          self.fill = 'black'
+          self.font_family = "Impact"
+      }
     else
       image = Magick::Image.read("#{RAILS_ROOT}/public/images/responsible.png").first
-
-      # http://rmagick.rubyforge.org/portfolio.html
       overlay = Magick::Draw.new
       overlay.annotate(image, 0, 0, 0, 10, @text.upcase << '!') {
           self.gravity = Magick::NorthGravity
