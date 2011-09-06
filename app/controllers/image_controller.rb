@@ -17,7 +17,7 @@ class ImageController < ApplicationController
 
       # http://rmagick.rubyforge.org/portfolio.html
       overlay = Magick::Draw.new
-      overlay.annotate(image, 0, 0, 0, 10, @text.upcase) {
+      overlay.annotate(image, 0, 0, 0, 10, @text.upcase << '!') {
           self.gravity = Magick::NorthGravity
           self.pointsize = 60
           self.fill = 'white'
@@ -25,7 +25,7 @@ class ImageController < ApplicationController
           # http://news.deviantart.com/article/41903/
           self.font_family = "Impact"
           self.stroke = 'black'
-          self.stroke_width = 3
+          self.stroke_width = 2
           self.font_weight = Magick::BoldWeight
       }
     end
