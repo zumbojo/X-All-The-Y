@@ -15,8 +15,8 @@ class ImageController < ApplicationController
     overlay = Magick::Draw.new
     # todo: use sad? and handle all differences in two different
     #  annotate blocks
-    overlay.annotate(image, 0, 0, 0, 60, @text) {
-        self.gravity = Magick::SouthGravity
+    overlay.annotate(image, 0, 0, 0, 10, @text) {
+        self.gravity = Magick::NorthGravity
         self.pointsize = 48
         self.stroke = 'transparent'
         self.fill = '#0000A9'
