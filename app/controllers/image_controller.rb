@@ -9,19 +9,26 @@ class ImageController < ApplicationController
       "#{@verb} #{@words} #{@noun}" 
     
     # pictures!
-    image = Magick::Image.read("#{RAILS_ROOT}/public/images/responsible.png").first
+    if sad?
+      render :text => "sadness is not yet implemented :("
+      # todo: downcase
+    else
+      image = Magick::Image.read("#{RAILS_ROOT}/public/images/responsible.png").first
 
-    # http://rmagick.rubyforge.org/portfolio.html
-    overlay = Magick::Draw.new
-    # todo: use sad? and handle all differences in two different
-    #  annotate blocks
-    overlay.annotate(image, 0, 0, 0, 10, @text) {
-        self.gravity = Magick::NorthGravity
-        self.pointsize = 48
-        self.stroke = 'transparent'
-        self.fill = '#0000A9'
-        self.font_weight = Magick::BoldWeight
-        }
+      # http://rmagick.rubyforge.org/portfolio.html
+      overlay = Magick::Draw.new
+      overlay.annotate(image, 0, 0, 0, 10, @text.upcase) {
+          self.gravity = Magick::NorthGravity
+          self.pointsize = 60
+          self.fill = 'white'
+          # lolcat text spec:
+          # http://news.deviantart.com/article/41903/
+          self.font_family = "Impact"
+          self.stroke = 'black'
+          self.stroke_width = 3
+          self.font_weight = Magick::BoldWeight
+      }
+    end
 
     # output!
     response.headers["Content-Type"] = "image/png"
