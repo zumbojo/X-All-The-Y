@@ -10,9 +10,11 @@ class ImageController < ApplicationController
     # basic .annotate examples at 
     # http://rmagick.rubyforge.org/portfolio.html
     if sad?
+      @first_line << '?' unless @second_line
+
       image = Magick::Image.read("#{RAILS_ROOT}/public/images/sad.png").first
       overlay = Magick::Draw.new
-      overlay.annotate(image, 0, 0, 0, 10, @first_line.downcase << '?') {
+      overlay.annotate(image, 0, 0, 0, 10, @first_line.downcase) {
           self.gravity = Magick::NorthGravity
           self.pointsize = 60
           self.fill = 'black'
@@ -27,9 +29,11 @@ class ImageController < ApplicationController
         }
       end
     else
+      @first_line << '!' unless @second_line
+
       image = Magick::Image.read("#{RAILS_ROOT}/public/images/responsible.png").first
       overlay = Magick::Draw.new
-      overlay.annotate(image, 0, 0, 0, 10, @first_line.upcase << '!') {
+      overlay.annotate(image, 0, 0, 0, 10, @first_line.upcase) {
           self.gravity = Magick::NorthGravity
           self.pointsize = 60
           self.fill = 'white'
