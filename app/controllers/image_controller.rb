@@ -19,7 +19,38 @@ class ImageController < ApplicationController
     end
 
     def render_rockso
-      render :text => 'not yet implemented'
+      @first_line << '!' unless @second_line
+
+      image = Magick::Image.read("#{RAILS_ROOT}/public/images/rockso_shhh.png").first
+      overlay = Magick::Draw.new
+      overlay.annotate(image, 0, 0, 0, 10, @first_line.upcase) {
+          self.gravity = Magick::NorthGravity
+          self.pointsize = 60
+          self.fill = 'white'
+          # lolcat text spec:
+          # http://news.deviantart.com/article/41903/
+          self.font_family = "Impact"
+          self.stroke = 'black'
+          self.stroke_width = 2
+          self.font_weight = Magick::BoldWeight
+      }
+      if @second_line
+        overlay.annotate(image, 0, 0, 0, 10, @second_line.upcase << '!') {
+            self.gravity = Magick::SouthGravity
+            self.pointsize = 60
+            self.fill = 'white'
+            # lolcat text spec:
+            # http://news.deviantart.com/article/41903/
+            self.font_family = "Impact"
+            self.stroke = 'black'
+            self.stroke_width = 2
+            self.font_weight = Magick::BoldWeight
+        }
+      end
+
+      # output!
+      response.headers["Content-Type"] = "image/png"
+      render :text => image.to_blob
     end
 
     def render_hyperbole
