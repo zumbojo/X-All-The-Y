@@ -5,13 +5,21 @@ class ImageController < ApplicationController
     @first_line = @words[0]
     @second_line = @words[1]
 
-    render_hyperbole
+    if (request.subdomains.first == 'rockso')
+      render_rockso
+    else
+      render_hyperbole
+    end
   end
 
   private 
     def show_error_message
       # todo
       # image should be prerendered and static
+    end
+
+    def render_rockso
+      render :text => 'not yet implemented'
     end
 
     def render_hyperbole
