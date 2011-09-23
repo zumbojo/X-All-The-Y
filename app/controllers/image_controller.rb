@@ -5,8 +5,11 @@ class ImageController < ApplicationController
     @first_line = @words[0]
     @second_line = @words[1]
 
-    if (request.subdomains.first == 'rockso')
+    case request.subdomains.first
+    when 'rockso'
       render_rockso
+    when 'face'
+      render_face
     else
       render_hyperbole
     end
@@ -111,6 +114,10 @@ class ImageController < ApplicationController
       # output!
       response.headers["Content-Type"] = "image/png"
       render :text => image.to_blob
+    end
+
+    def render_face
+      render :text => '&#3232;_&#3232'
     end
 
     def sad?
