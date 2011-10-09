@@ -6,8 +6,16 @@ class ImageController < ApplicationController
     @second_line = @words[1]
 
     case request.subdomains.first
+    when 'fry'
+      render_standard("#{RAILS_ROOT}/public/images/fry.png")
+    when 'goodguy'
+      render_standard("#{RAILS_ROOT}/public/images/goodguy.png")
     when 'rockso'
       render_standard("#{RAILS_ROOT}/public/images/rockso_shhh.png")
+    when 'scumbag'
+      render_standard("#{RAILS_ROOT}/public/images/scumbag.png")
+    when 'yuno'
+      render_standard("#{RAILS_ROOT}/public/images/yuno.png")
     else
       render_hyperbole
     end
