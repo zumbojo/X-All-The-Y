@@ -15,15 +15,15 @@ class ImageController < ApplicationController
     when 'scumbag'
       render_standard("#{RAILS_ROOT}/public/images/scumbag.png")
     when 'yuno'
-      render_standard("#{RAILS_ROOT}/public/images/yuno.png")
+      render_standard("#{RAILS_ROOT}/public/images/yuno.png", '?')
     else
       render_hyperbole
     end
   end
 
   private 
-    def render_standard(filename)
-      @first_line << '!' unless @second_line
+    def render_standard(filename, append)
+      @first_line << append unless @second_line
 
       image = Magick::Image.read(filename).first
       overlay = Magick::Draw.new
@@ -39,7 +39,7 @@ class ImageController < ApplicationController
           self.font_weight = Magick::BoldWeight
       }
       if @second_line
-        overlay.annotate(image, 0, 0, 0, 10, @second_line.upcase << '!') {
+        overlay.annotate(image, 0, 0, 0, 10, @second_line.upcase << append) {
             self.gravity = Magick::SouthGravity
             self.pointsize = 60
             self.fill = 'white'
