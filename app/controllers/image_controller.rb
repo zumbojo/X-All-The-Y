@@ -7,22 +7,17 @@ class ImageController < ApplicationController
 
     case request.subdomains.first
     when 'rockso'
-      render_rockso
+      render_standard("#{RAILS_ROOT}/public/images/rockso_shhh.png")
     else
       render_hyperbole
     end
   end
 
   private 
-    def show_error_message
-      # todo
-      # image should be prerendered and static
-    end
-
-    def render_rockso
+    def render_standard(filename)
       @first_line << '!' unless @second_line
 
-      image = Magick::Image.read("#{RAILS_ROOT}/public/images/rockso_shhh.png").first
+      image = Magick::Image.read(filename).first
       overlay = Magick::Draw.new
       overlay.annotate(image, 0, 0, 0, 10, @first_line.upcase) {
           self.gravity = Magick::NorthGravity
